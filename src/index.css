@@ -1,0 +1,248 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 20% 8%;
+    --foreground: 40 20% 95%;
+    --card: 30 15% 12%;
+    --card-foreground: 40 20% 95%;
+    --popover: 30 15% 10%;
+    --popover-foreground: 40 20% 95%;
+    --primary: 35 60% 50%;
+    --primary-foreground: 30 20% 8%;
+    --secondary: 30 10% 18%;
+    --secondary-foreground: 40 20% 95%;
+    --muted: 30 10% 20%;
+    --muted-foreground: 40 10% 60%;
+    --accent: 35 60% 50%;
+    --accent-foreground: 30 20% 8%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 30 10% 20%;
+    --input: 30 10% 20%;
+    --ring: 35 60% 50%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Book 3D Styles */
+.book-container {
+  perspective: 2000px;
+  transform-style: preserve-3d;
+}
+
+.book {
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.page {
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.page.flipped {
+  transform: rotateY(-180deg);
+}
+
+.page-front,
+.page-back {
+  backface-visibility: hidden;
+  position: absolute;
+  inset: 0;
+}
+
+.page-back {
+  transform: rotateY(180deg);
+}
+
+/* Magazine binding effect */
+.magazine-binding {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.1) 5%,
+    rgba(255, 255, 255, 0.1) 10%,
+    rgba(0, 0, 0, 0.1) 15%,
+    rgba(0, 0, 0, 0.2) 50%,
+    rgba(0, 0, 0, 0.1) 85%,
+    rgba(255, 255, 255, 0.1) 90%,
+    rgba(0, 0, 0, 0.1) 95%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+}
+
+.softcover-binding {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.2) 8%,
+    rgba(255, 255, 255, 0.05) 12%,
+    rgba(0, 0, 0, 0.15) 20%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.15) 80%,
+    rgba(255, 255, 255, 0.05) 88%,
+    rgba(0, 0, 0, 0.2) 92%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}
+
+/* Paper textures */
+.paper-texture-smooth {
+  background: #fafafa;
+}
+
+.paper-texture-rough {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+  background-color: #f5f5f0;
+}
+
+.paper-texture-cream {
+  background-color: #f5f0e6;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+.paper-texture-newsprint {
+  background-color: #e8e4d9;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.12'/%3E%3C/svg%3E");
+}
+
+/* Page shadow effects */
+.page-shadow {
+  box-shadow: 
+    inset -10px 0 20px -10px rgba(0, 0, 0, 0.15),
+    inset 10px 0 20px -10px rgba(0, 0, 0, 0.1),
+    0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.page-curl {
+  position: relative;
+}
+
+.page-curl::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(
+    135deg,
+    transparent 50%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  border-radius: 0 0 0 4px;
+  pointer-events: none;
+}
+
+/* Cover styles */
+.cover-leather {
+  background: linear-gradient(135deg, #3d2914 0%, #5c3d1e 50%, #3d2914 100%);
+  position: relative;
+}
+
+.cover-leather::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.15'/%3E%3C/svg%3E");
+  opacity: 0.4;
+}
+
+.cover-fabric {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+  position: relative;
+}
+
+.cover-fabric::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.1) 2px,
+    rgba(0, 0, 0, 0.1) 4px
+  );
+}
+
+.cover-matte {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+}
+
+.cover-glossy {
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 30%, #252550 50%, #1a1a3e 70%, #0f0f23 100%);
+  position: relative;
+}
+
+.cover-glossy::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* GPU acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
