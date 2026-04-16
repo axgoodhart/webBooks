@@ -78,27 +78,35 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
     return null
   }
 
+  const safeId = id.replace(/<\/style/gi, "").replace(/[^\w-]/g, "")
+
   return (
-    <style
-      dangerouslySetInnerHTML={{
-        __html: Object.entries(THEMES)
-          .map(
-            ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
+    <style>
+      {Object.entries(THEMES)
+        .map(([theme, prefix]) => {
+          return `
+${prefix} [data-chart="${safeId}"] {
 ${colorConfig
   .map(([key, itemConfig]) => {
     const color =
       itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
       itemConfig.color
-    return color ? `  --color-${key}: ${color};` : null
+
+    if (!color) {
+      return null
+    }
+
+    const cleanKey = key.replace(/<\/style/gi, "").replace(/[^\w:-]/g, "")
+    const cleanColor = color.replace(/[;}]|<\/style/gi, "")
+
+    return `  --color-${cleanKey}: ${cleanColor};`
   })
   .join("\n")}
 }
 `
-          )
-          .join("\n"),
-      }}
-    />
+        })
+        .join("\n")}
+    </style>
   )
 }
 
